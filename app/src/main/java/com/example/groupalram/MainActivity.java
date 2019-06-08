@@ -15,8 +15,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBtnAddAlranClick(View v){
-        Log.d("btn", "알람 추가창으로 이동");
-        //Intent intent = new Intent(this, AlramSetActivity.class);
-        //startActivity(intent);
+        //Log.d("btn", "알람 추가창으로 이동");
+        Intent intent = new Intent(this, AlramSetActivity.class);
+        startActivity(intent);
     }
 }
