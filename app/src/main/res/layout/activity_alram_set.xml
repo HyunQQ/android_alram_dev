@@ -1,42 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".AlramSetActivity">
 
 
-<!--</android.support.constraint.ConstraintLayout>-->
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:gravity="top"-->
-    <!--android:orientation="vertical">-->
-
+    <!--알람 셋팅 스크롤뷰-->
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="417dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:layout_editor_absoluteX="-6dp">
 
+        <!--알람셋팅 레이아웃-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <!--광고 레이아웃-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="AD" />
+                    android:text="광고 패널" />
             </LinearLayout>
 
+            <!--시간 설정 레이아웃-->
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -44,7 +42,7 @@
                 android:orientation="vertical">
 
                 <TimePicker
-                    android:id="@+id/time_picker"
+                    android:id="@+id/alram_time_setter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="30dp"
@@ -53,77 +51,78 @@
 
             </LinearLayout>
 
+            <!--요일 설정 레이아웃-->
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
                 android:orientation="horizontal">
 
+                <!--월-->
                 <ImageButton
-                    android:id="@+id/imageButton2"
+                    android:id="@+id/btn_mon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@android:drawable/ic_menu_add" />
 
                 <ImageButton
-                    android:id="@+id/imageButton3"
-                    android:layout_width="match_parent"
+                    android:id="@+id/btn_tue"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     app:srcCompat="@android:drawable/ic_menu_add" />
 
                 <ImageButton
-                    android:id="@+id/imageButton4"
-                    android:layout_width="match_parent"
+                    android:id="@+id/btn_wed"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     app:srcCompat="@android:drawable/ic_menu_add" />
 
                 <ImageButton
-                    android:id="@+id/imageButton5"
-                    android:layout_width="match_parent"
+                    android:id="@+id/btn_thu"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     app:srcCompat="@android:drawable/ic_menu_add" />
 
                 <ImageButton
-                    android:id="@+id/imageButton6"
-                    android:layout_width="match_parent"
+                    android:id="@+id/btn_fri"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     app:srcCompat="@android:drawable/ic_menu_add" />
 
                 <ImageButton
-                    android:id="@+id/imageButton7"
-                    android:layout_width="match_parent"
+                    android:id="@+id/btn_sat"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     app:srcCompat="@android:drawable/ic_menu_add" />
 
                 <ImageButton
-                    android:id="@+id/imageButton8"
-                    android:layout_width="match_parent"
+                    android:id="@+id/btn_sun"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     app:srcCompat="@android:drawable/ic_menu_add" />
 
             </LinearLayout>
 
+            <!--공휴일 알람 끄기 옵션 레이아웃-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="20dp"
                 android:orientation="horizontal">
 
                 <Switch
-                    android:id="@+id/switch1"
+                    android:id="@+id/switch_holi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="공휴일 알람 끄기" />
             </LinearLayout>
 
+            <!--알람 크기 설정 레이아웃-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="20dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -132,47 +131,49 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/txt_set_vol"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="알람크기" />
 
                     <SeekBar
-                        android:id="@+id/seekBar"
+                        android:id="@+id/bar_vol"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
                 <ImageButton
-                    android:id="@+id/imageButton9"
+                    android:id="@+id/btn_vibrate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     app:srcCompat="@android:drawable/ic_menu_always_landscape_portrait" />
 
                 <Switch
-                    android:id="@+id/switch2"
+                    android:id="@+id/switch_vol"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
 
             </LinearLayout>
 
+            <!--벨소리 선택 레이아웃-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="20dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/txt_bell"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="벨소리" />
 
                 <Button
-                    android:id="@+id/selc_bell_button"
+                    android:id="@+id/btn_selc_bell"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -180,49 +181,60 @@
 
             </LinearLayout>
 
+            <!--알람주기 선택 레이아웃-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
+                android:padding="20dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="314dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/txt_alram_cycle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
                         android:text="다시 알람 주기" />
 
                     <Button
-                        android:id="@+id/selc_bell_button"
-                        android:layout_width="173dp"
+                        android:id="@+id/btn_selc_cycle"
+                        android:layout_width="170dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
                         android:text="5분, 3회" />
 
                 </LinearLayout>
 
+                <!--정렬을 위한 뷰-->
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
                 <Switch
-                    android:id="@+id/switch3"
+                    android:id="@+id/switch_cycle"
                     android:layout_width="98dp"
                     android:layout_height="match_parent"
+                    android:layout_gravity="right"
                     android:layout_weight="0" />
 
             </LinearLayout>
 
+            <!--알람 이름 설정 레이아웃-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="20dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/txt_set_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="알람 이름" />
@@ -234,24 +246,26 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="hint" />
+                        android:hint="알람 이름 입력" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
+            <!--그룹 설정 레이아웃-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="20dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/txt_set_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="그룹설정" />
 
                 <Button
-                    android:id="@+id/selc_bell_button"
+                    android:id="@+id/btn_selc_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -259,29 +273,59 @@
 
             </LinearLayout>
 
+            <!--옵션 설정 레이아웃-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="20dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/textViewdfsf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="옵션" />
 
                 <Button
-                    android:id="@+id/selc_bell_button"
+                    android:id="@+id/selc_bell_buttondsds"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="옵션 선택" />
 
             </LinearLayout>
 
         </LinearLayout>
+
+
     </ScrollView>
 
-</android.support.constraint.ConstraintLayout>
+    <!--취소 저장 레이아웃-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00252020"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_set_alram_cancl"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="50dp"
+            android:layout_weight="0"
+            android:text="취소" />
+
+        <Button
+            android:id="@+id/btn_set_alram_save"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="50dp"
+            android:layout_weight="0"
+            android:text="저장" />
+    </RelativeLayout>
+
+
+</LinearLayout>
 
