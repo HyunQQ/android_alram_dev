@@ -308,12 +308,13 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_set_alram_cancl"
+            android:id="@+id/btn_set_alram_cancle"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="50dp"
             android:layout_weight="0"
+            android:onClick="onBtnSetAlramCancleClick"
             android:text="취소" />
 
         <Button

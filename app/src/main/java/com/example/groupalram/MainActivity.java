@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -12,11 +13,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button btnAddAlram = (Button) findViewById(R.id.btn_add_alram);
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 알람 추가
+                Intent intent = new Intent(MainActivity.this, AlramSetActivity.class);
+                startActivity(intent);
+            }
+        };
+
+        btnAddAlram.setOnClickListener(listener);
     }
 
-    public void onBtnAddAlranClick(View v){
-        //Log.d("btn", "알람 추가창으로 이동");
-        Intent intent = new Intent(this, AlramSetActivity.class);
-        startActivity(intent);
-    }
 }
