@@ -4,7 +4,7 @@
     tools:context="com.example.ch9_popup_menu.Popupmenu" >
 
     <item android:id="@+id/alram_group_1"
-        android:title="5분 3회"/>
+        android:title="그룹1"/>
 
 
 </menu>

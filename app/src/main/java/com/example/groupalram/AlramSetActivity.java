@@ -98,7 +98,7 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
             case R.id.btn_selc_group:
 
                 PopupMenu pSelcGroup = new PopupMenu(this, v);
-                pSelcGroup.getMenuInflater().inflate(R.menu.selc_cycle_menu, pSelcGroup.getMenu());
+                pSelcGroup.getMenuInflater().inflate(R.menu.selc_group_menu, pSelcGroup.getMenu());
                 pSelcGroup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -117,7 +117,7 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
             case R.id.btn_selc_opt:
 
                 PopupMenu pSelcOpt = new PopupMenu(this, v);
-                pSelcOpt.getMenuInflater().inflate(R.menu.selc_cycle_menu, pSelcOpt.getMenu());
+                pSelcOpt.getMenuInflater().inflate(R.menu.selc_opt_menu, pSelcOpt.getMenu());
                 pSelcOpt.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
