@@ -314,7 +314,6 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="50dp"
             android:layout_weight="0"
-            android:onClick="onBtnSetAlramCancleClick"
             android:text="취소" />
 
         <Button
