@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.ch9_popup_menu.Popupmenu" >
 
-    <item android:id="@+id/alram_bell_1"
-        android:title="벨소리 리스트"/>
+    <item android:id="@+id/alram_group_1"
+        android:title="5분 3회"/>
+
 
 </menu>

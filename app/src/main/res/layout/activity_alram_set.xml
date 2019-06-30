@@ -281,17 +281,17 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textViewdfsf"
+                    android:id="@+id/txt_selc_opt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="옵션" />
 
                 <Button
-                    android:id="@+id/selc_bell_buttondsds"
+                    android:id="@+id/btn_selc_opt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="옵션 선택" />
+                    android:text="알람 옵션" />
 
             </LinearLayout>
 
