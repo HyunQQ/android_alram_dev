@@ -4,9 +4,6 @@
     tools:context="com.example.ch9_popup_menu.Popupmenu" >
 
     <item android:id="@+id/m1"
-        android:title="메뉴1"/>
-
-    <item android:id="@+id/m2"
-        android:title="메뉴2"/>
+        android:title="벨소리 리스트"/>
 
 </menu>

@@ -1,0 +1,15 @@
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.ch9_popup_menu.Popupmenu" >
+
+    <item android:id="@+id/alram_cycle_1"
+        android:title="5분 3회"/>
+    <item android:id="@+id/alram_cycle_2"
+        android:title="5분 5회"/>
+    <item android:id="@+id/alram_cycle_3"
+        android:title="10분 3회"/>
+    <item android:id="@+id/alram_cycle_4"
+        android:title="10분 5회"/>
+
+</menu>

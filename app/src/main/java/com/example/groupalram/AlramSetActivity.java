@@ -12,6 +12,8 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
     private Button btnSetAlramCancle;
     private Button btnSetAlramSave;
     private Button btnSelcBell;
+    private Button btnSelcCycle;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +23,12 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
         btnSetAlramCancle = (Button) findViewById(R.id.btn_set_alram_cancle);
         btnSetAlramSave = (Button) findViewById(R.id.btn_set_alram_save);
         btnSelcBell = (Button) findViewById(R.id.btn_selc_bell);
+        btnSelcCycle = (Button)findViewById(R.id.btn_selc_cycle);
 
         btnSetAlramCancle.setOnClickListener(this);
         btnSetAlramSave.setOnClickListener(this);
         btnSelcBell.setOnClickListener(this);
+        btnSelcCycle.setOnClickListener(this);
 
     }
     @Override
@@ -50,16 +54,40 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.m1:
-                                Toast.makeText(getApplication(),"메뉴1",Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.m2:
-                                Toast.makeText(getApplication(),"메뉴2",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplication(),"벨소리 리스트",Toast.LENGTH_SHORT).show();
                                 break;
                         }
                         return false;
                     }
                 });
                 pSelcBell.show();
+                break;
+
+            case R.id.btn_selc_cycle:
+
+                PopupMenu pSelcCycle = new PopupMenu(this, v);
+                pSelcCycle.getMenuInflater().inflate(R.menu.selc_cycle_menu, pSelcCycle.getMenu());
+                pSelcCycle.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.alram_cycle_1:
+                                Toast.makeText(getApplication(),"cycle1",Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.alram_cycle_2:
+                                Toast.makeText(getApplication(),"cycle2",Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.alram_cycle_3:
+                                Toast.makeText(getApplication(),"cycle3",Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.alram_cycle_4:
+                                Toast.makeText(getApplication(),"cycle4",Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                pSelcCycle.show();
                 break;
         }
 
