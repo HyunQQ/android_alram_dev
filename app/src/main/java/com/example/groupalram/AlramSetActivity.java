@@ -1,11 +1,14 @@
 package com.example.groupalram;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 public class AlramSetActivity extends AppCompatActivity implements View.OnClickListener{
@@ -52,20 +55,30 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
 
             case R.id.btn_selc_bell:
 
-                PopupMenu pSelcBell = new PopupMenu(this, v);
-                pSelcBell.getMenuInflater().inflate(R.menu.selc_bell_menu, pSelcBell.getMenu());
-                pSelcBell.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.alram_bell_1:
-                                Toast.makeText(getApplication(),"벨소리 리스트",Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-                        return false;
-                    }
-                });
-                pSelcBell.show();
+                View selcBellPopView = getLayoutInflater().inflate(R.layout.selc_bell_pop,null);
+                PopupWindow mPopupWindow = new PopupWindow(selcBellPopView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                mPopupWindow.setFocusable(true);
+
+                mPopupWindow.showAtLocation(selcBellPopView, Gravity.CENTER, 0, 0);
+
+
+
+//                  팝업 메뉴
+//                PopupMenu pSelcBell = new PopupMenu(this, v);
+//                pSelcBell.getMenuInflater().inflate(R.menu.selc_bell_menu, pSelcBell.getMenu());
+//                pSelcBell.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                    @Override
+//                    public boolean onMenuItemClick(MenuItem item) {
+//                        switch (item.getItemId()){
+//                            case R.id.alram_bell_1:
+//                                Toast.makeText(getApplication(),"벨소리 리스트",Toast.LENGTH_SHORT).show();
+//                                break;
+//                        }
+//                        return false;
+//                    }
+//                });
+//                pSelcBell.show();
                 break;
 
             case R.id.btn_selc_cycle:
