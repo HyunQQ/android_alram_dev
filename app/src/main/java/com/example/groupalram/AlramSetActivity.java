@@ -1,15 +1,15 @@
 package com.example.groupalram;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.PopupMenu;
-import android.widget.PopupWindow;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AlramSetActivity extends AppCompatActivity implements View.OnClickListener{
     private Button btnSetAlramCancle;
@@ -54,98 +54,199 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case R.id.btn_selc_bell:
-
-                View selcBellPopView = getLayoutInflater().inflate(R.layout.selc_bell_pop,null);
-                PopupWindow mPopupWindow = new PopupWindow(selcBellPopView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-                mPopupWindow.setFocusable(true);
-
-                mPopupWindow.showAtLocation(selcBellPopView, Gravity.CENTER, 0, 0);
-
-
-
-//                  팝업 메뉴
-//                PopupMenu pSelcBell = new PopupMenu(this, v);
-//                pSelcBell.getMenuInflater().inflate(R.menu.selc_bell_menu, pSelcBell.getMenu());
-//                pSelcBell.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                    @Override
-//                    public boolean onMenuItemClick(MenuItem item) {
-//                        switch (item.getItemId()){
-//                            case R.id.alram_bell_1:
-//                                Toast.makeText(getApplication(),"벨소리 리스트",Toast.LENGTH_SHORT).show();
-//                                break;
-//                        }
-//                        return false;
-//                    }
-//                });
-//                pSelcBell.show();
+                selcBellShow();
                 break;
 
             case R.id.btn_selc_cycle:
-
-                PopupMenu pSelcCycle = new PopupMenu(this, v);
-                pSelcCycle.getMenuInflater().inflate(R.menu.selc_cycle_menu, pSelcCycle.getMenu());
-                pSelcCycle.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.alram_cycle_1:
-                                Toast.makeText(getApplication(),"cycle1",Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.alram_cycle_2:
-                                Toast.makeText(getApplication(),"cycle2",Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.alram_cycle_3:
-                                Toast.makeText(getApplication(),"cycle3",Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.alram_cycle_4:
-                                Toast.makeText(getApplication(),"cycle4",Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-                        return false;
-                    }
-                });
-                pSelcCycle.show();
+                selcCycleShow();
                 break;
 
             case R.id.btn_selc_group:
-
-                PopupMenu pSelcGroup = new PopupMenu(this, v);
-                pSelcGroup.getMenuInflater().inflate(R.menu.selc_group_menu, pSelcGroup.getMenu());
-                pSelcGroup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.alram_group_1:
-                                Toast.makeText(getApplication(),"alram_group_1",Toast.LENGTH_SHORT).show();
-                                break;
-
-                        }
-                        return false;
-                    }
-                });
-                pSelcGroup.show();
+                selcGroupShow();
                 break;
 
             case R.id.btn_selc_opt:
-
-                PopupMenu pSelcOpt = new PopupMenu(this, v);
-                pSelcOpt.getMenuInflater().inflate(R.menu.selc_opt_menu, pSelcOpt.getMenu());
-                pSelcOpt.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.alram_opt_1:
-                                Toast.makeText(getApplication(),"alram_opt_1",Toast.LENGTH_SHORT).show();
-                                break;
-
-                        }
-                        return false;
-                    }
-                });
-                pSelcOpt.show();
+                selcOptShow();
                 break;
         }
 
+    }
+
+    public void selcBellShow(){
+        final List<String> ListItems = new ArrayList<>();
+        ListItems.add("test bell1");
+        ListItems.add("test bell2");
+        ListItems.add("test bell3");
+
+        final CharSequence[] items = ListItems.toArray(new String[ListItems.size()]);
+
+        final List selectedItems = new ArrayList();
+        int defaultItem = 0;
+        selectedItems.add(defaultItem);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("알람 주기 선택");
+        builder.setSingleChoiceItems(items, defaultItem,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        selectedItems.clear();
+                        selectedItems.add(which);
+                    }
+                });
+        builder.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String msg ="";
+
+                        if(!selectedItems.isEmpty()){
+                            int index = (int) selectedItems.get(0);
+                            msg = ListItems.get(index);
+                        }
+                        Toast.makeText(getApplicationContext(), msg + "Item Selected.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        builder.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.show();
+    }
+
+    public void selcCycleShow(){
+        final List<String> ListItems = new ArrayList<>();
+        ListItems.add("test cycle1");
+        ListItems.add("test cycle2");
+        ListItems.add("test cycle3");
+
+        final CharSequence[] items = ListItems.toArray(new String[ListItems.size()]);
+
+        final List selectedItems = new ArrayList();
+        int defaultItem = 0;
+        selectedItems.add(defaultItem);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("벨소리 선택");
+        builder.setSingleChoiceItems(items, defaultItem,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        selectedItems.clear();
+                        selectedItems.add(which);
+                    }
+                });
+        builder.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String msg ="";
+
+                        if(!selectedItems.isEmpty()){
+                            int index = (int) selectedItems.get(0);
+                            msg = ListItems.get(index);
+                        }
+                        Toast.makeText(getApplicationContext(), msg + "Item Selected.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        builder.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.show();
+    }
+    public void selcGroupShow(){
+        final List<String> ListItems = new ArrayList<>();
+        ListItems.add("test group1");
+        ListItems.add("test group2");
+        ListItems.add("test group3");
+
+        final CharSequence[] items = ListItems.toArray(new String[ListItems.size()]);
+
+        final List selectedItems = new ArrayList();
+        int defaultItem = 0;
+        selectedItems.add(defaultItem);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("그룹 선택");
+        builder.setSingleChoiceItems(items, defaultItem,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        selectedItems.clear();
+                        selectedItems.add(which);
+                    }
+                });
+        builder.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String msg ="";
+
+                        if(!selectedItems.isEmpty()){
+                            int index = (int) selectedItems.get(0);
+                            msg = ListItems.get(index);
+                        }
+                        Toast.makeText(getApplicationContext(), msg + "Item Selected.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        builder.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.show();
+    }
+    public void selcOptShow(){
+        final List<String> ListItems = new ArrayList<>();
+        ListItems.add("test opt1");
+        ListItems.add("test opt2");
+        ListItems.add("test opt3");
+
+        final CharSequence[] items = ListItems.toArray(new String[ListItems.size()]);
+
+        final List selectedItems = new ArrayList();
+        int defaultItem = 0;
+        selectedItems.add(defaultItem);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("옵션 선택");
+        builder.setSingleChoiceItems(items, defaultItem,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        selectedItems.clear();
+                        selectedItems.add(which);
+                    }
+                });
+        builder.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String msg ="";
+
+                        if(!selectedItems.isEmpty()){
+                            int index = (int) selectedItems.get(0);
+                            msg = ListItems.get(index);
+                        }
+                        Toast.makeText(getApplicationContext(), msg + "Item Selected.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        builder.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.show();
     }
 }
