@@ -73,6 +73,8 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void selcBellShow(){
+//        https://developer.android.com/reference/android/media/RingtoneManager 찾아보기
+
         final List<String> ListItems = new ArrayList<>();
         ListItems.add("test bell1");
         ListItems.add("test bell2");
