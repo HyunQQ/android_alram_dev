@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -75,8 +76,18 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
         }
 
     }
-
-//    public boid onActivityResult(int)
+    // 팝업 메뉴에서의 리턴값 활용을 위해
+    public void onActivityResult(int requestCode, int resultCode, Intent intent){
+        super.onActivityResult(requestCode, resultCode, intent);
+        switch (requestCode){
+            case REQUEST_CODE_RINGTONE:
+                if(resultCode == RESULT_OK){
+                    Uri uri = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+                    String ringToneName = RingtoneManager.getRingtone(this, uri).getTitle(this);
+                    Toast.makeText(getApplicationContext(), ringToneName + "is selected", Toast.LENGTH_SHORT).show();
+                }
+        }
+    }
 
     public void selcBellShow(){
 //        https://developer.android.com/reference/android/media/RingtoneManager 찾아보기
