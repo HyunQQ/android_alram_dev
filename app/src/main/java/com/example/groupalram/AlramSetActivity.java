@@ -2,6 +2,8 @@ package com.example.groupalram;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -18,6 +20,8 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
     private Button btnSelcCycle;
     private Button btnSelcGroup;
     private Button btnSelcOpt;
+
+    public static final int REQUEST_CODE_RINGTONE=10005;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,51 +76,16 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+//    public boid onActivityResult(int)
+
     public void selcBellShow(){
 //        https://developer.android.com/reference/android/media/RingtoneManager 찾아보기
-
-        final List<String> ListItems = new ArrayList<>();
-        ListItems.add("test bell1");
-        ListItems.add("test bell2");
-        ListItems.add("test bell3");
-
-        final CharSequence[] items = ListItems.toArray(new String[ListItems.size()]);
-
-        final List selectedItems = new ArrayList();
-        int defaultItem = 0;
-        selectedItems.add(defaultItem);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("알람 주기 선택");
-        builder.setSingleChoiceItems(items, defaultItem,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        selectedItems.clear();
-                        selectedItems.add(which);
-                    }
-                });
-        builder.setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String msg ="";
-
-                        if(!selectedItems.isEmpty()){
-                            int index = (int) selectedItems.get(0);
-                            msg = ListItems.get(index);
-                        }
-                        Toast.makeText(getApplicationContext(), msg + "Item Selected.", Toast.LENGTH_SHORT).show();
-                    }
-                });
-        builder.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-        builder.show();
+        Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE,"벨소리를 선택하세요.");
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE,RingtoneManager.TYPE_ALARM);
+        startActivityForResult(intent, REQUEST_CODE_RINGTONE);
     }
 
     public void selcCycleShow(){
