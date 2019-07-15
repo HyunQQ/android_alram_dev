@@ -10,24 +10,21 @@ import android.widget.Toast;
 
 
 public class DbOpenHelper {
-    private static final String DATABASE_NAME = "addressbook.db";
+    private static final String DATABASE_NAME = "groupalram.db";
     private static final int DATABASE_VERSION = 1;
     public static SQLiteDatabase mDB;
     private DataBaseHelper mDBHelper;
-    private Context mCtx;
+    private Context context;
 
 
-    private class DataBaseHelper extends SQLiteOpenHelper {
+    public class DataBaseHelper extends SQLiteOpenHelper {
 
         /**
          * 데이터베이스 헬퍼 생성자
          * @param context   context
-         * @param name      Db Name
-         * @param factory   CursorFactory
-         * @param version   Db Version
          */
-        public DataBaseHelper(Context context, String name,
-                              SQLiteDatabase.CursorFactory factory, int version) {
+        public DataBaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory,
+                              int version) {
             super(context, name, factory, version);
         }
 
@@ -36,7 +33,6 @@ public class DbOpenHelper {
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(DataBase.CreateDB._ALRAMCREATE);
             db.execSQL(DataBase.CreateDB._GROUPCREATE);
-            Toast.makeText(mCtx, "db 생성.", Toast.LENGTH_SHORT).show();
 
         }
 
@@ -46,21 +42,19 @@ public class DbOpenHelper {
             //업데이트를 했는데 DB가 존재할 경우 onCreate를 다시 불러온다
             db.execSQL("DROP TABLE IF EXISTS " + DataBase.CreateDB._ALRAMTABLENAME);
             db.execSQL("DROP TABLE IF EXISTS " + DataBase.CreateDB._GRTABLENAME);
-            Toast.makeText(mCtx,  "db 업데이트.", Toast.LENGTH_SHORT).show();
             onCreate(db);
         }
     }
 
     //DbOpenHelper 생성자
     public DbOpenHelper(Context context) {
-        this.mCtx = context;
+        this.context = context;
     }
 
     //Db를 여는 메소드
     public DbOpenHelper open() throws SQLException {
-        mDBHelper = new DataBaseHelper(mCtx, DATABASE_NAME, null, DATABASE_VERSION);
+        mDBHelper = new DataBaseHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
         mDB = mDBHelper.getWritableDatabase();
-        Toast.makeText(mCtx, "db open.", Toast.LENGTH_SHORT).show();
         return this;
     }
 
@@ -68,6 +62,10 @@ public class DbOpenHelper {
     public void close() {
         mDB.close();
     }
+
+    //  디비 selet insert delete 사용 쿼리 작성필요  아래는 샘플
+
+
 
 //    /**
 //     *  데이터베이스에 사용자가 입력한 값을 insert하는 메소드

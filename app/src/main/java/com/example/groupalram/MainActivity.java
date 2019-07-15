@@ -13,7 +13,7 @@ import android.widget.Switch;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private DbOpenHelper mDbOpenHelper;
+    public DbOpenHelper mDbOpenHelper;
     Context context;
     LinearLayout layout;
     int count = 0;
