@@ -11,13 +11,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class AlramSetActivity extends AppCompatActivity implements View.OnClickListener{
+public class AlramSetActivity extends AppCompatActivity implements View.OnClickListener, TimePicker.OnTimeChangedListener {
     private Button btnSetAlramCancle;
     private Button btnSetAlramSave;
     private Button btnSelcBell;
@@ -25,6 +26,8 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
     private Button btnSelcGroup;
     private Button btnSelcOpt;
 
+    TimePicker mTimePicker;
+    int nHourDay, nMinute;
     // 시간 설정을 위한 객체
     Calendar Time;
 
@@ -37,6 +40,12 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
     public static final int REQUEST_CODE_RINGTONE=10005;
 
     @Override
+    public void onTimeChanged(TimePicker timePicker, int hourOfDay, int minute){
+            nHourDay = hourOfDay;
+            nMinute =minute;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alram_set);
@@ -47,6 +56,9 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
         btnSelcCycle        = (Button)findViewById(R.id.btn_selc_cycle);
         btnSelcGroup        = (Button)findViewById(R.id.btn_selc_group);
         btnSelcOpt          = (Button)findViewById(R.id.btn_selc_opt);
+        mTimePicker         = (TimePicker)findViewById(R.id.alram_time_picker);
+        mTimePicker.setIs24HourView(false);
+        mTimePicker.setOnTimeChangedListener(this);
 
         btnSetAlramCancle.setOnClickListener(this);
         btnSetAlramSave.setOnClickListener(this);
