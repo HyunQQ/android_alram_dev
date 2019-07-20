@@ -1,6 +1,8 @@
 package com.example.groupalram;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.RingtoneManager;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AlramSetActivity extends AppCompatActivity implements View.OnClickListener{
@@ -21,6 +24,15 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
     private Button btnSelcCycle;
     private Button btnSelcGroup;
     private Button btnSelcOpt;
+
+    // 시간 설정을 위한 객체
+    Calendar Time;
+
+    //알람 설정을 위한 객체
+    private Intent intent;
+    private PendingIntent ServicePending;
+    private AlarmManager alarmManager;
+
 
     public static final int REQUEST_CODE_RINGTONE=10005;
 
@@ -230,5 +242,17 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
                     }
                 });
         builder.show();
+    }
+
+   //////////// 제작중
+    public void setAlram(){
+        intent = new Intent("Alram Reciver");
+        ServicePending = PendingIntent.getBroadcast(
+                AlramSetActivity.this, 111, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, Time.getTimeInMillis(), ServicePending);
+
+        Toast.makeText(getBaseContext(),"알람 설정", Toast.LENGTH_LONG).show();
+
     }
 }
