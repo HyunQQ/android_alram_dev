@@ -39,6 +39,7 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
 
     public static final int REQUEST_CODE_RINGTONE=10005;
 
+    //timepicker 설정 값 받아오는 함수
     @Override
     public void onTimeChanged(TimePicker timePicker, int hourOfDay, int minute){
             nHourDay = hourOfDay;
