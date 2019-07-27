@@ -27,23 +27,27 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
     private Button btnSelcOpt;
 
     TimePicker mTimePicker;
-    int nHourDay, nMinute;
+    int pickerHourDay =0;
+    int pickerMinute = 0;
     // 시간 설정을 위한 객체
     Calendar Time;
 
     //알람 설정을 위한 객체
-    private Intent intent;
-    private PendingIntent ServicePending;
+//    private Intent intent;
+    private PendingIntent pendingIntent;
     private AlarmManager alarmManager;
-
-
+    private Calendar calendar;
+    private String ringToneName;
+    private Uri rinToneUri;
     public static final int REQUEST_CODE_RINGTONE=10005;
+
+
 
     //timepicker 설정 값 받아오는 함수
     @Override
     public void onTimeChanged(TimePicker timePicker, int hourOfDay, int minute){
-            nHourDay = hourOfDay;
-            nMinute =minute;
+        pickerHourDay = hourOfDay;
+        pickerMinute = minute;
     }
 
     @Override
@@ -80,6 +84,7 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
                 break;
             // 저장버튼 클릭
             case R.id.btn_set_alram_save:
+                setAlarm();
                 onBackPressed();
                 break;
 
@@ -107,8 +112,8 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
         switch (requestCode){
             case REQUEST_CODE_RINGTONE:
                 if(resultCode == RESULT_OK){
-                    Uri uri = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-                    String ringToneName = RingtoneManager.getRingtone(this, uri).getTitle(this);
+                    rinToneUri = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+                    ringToneName = RingtoneManager.getRingtone(this, rinToneUri).getTitle(this);
                     Toast.makeText(getApplicationContext(), ringToneName + "is selected", Toast.LENGTH_SHORT).show();
                 }
         }
@@ -258,14 +263,38 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
     }
 
    //////////// 제작중
-    public void setAlram(){
-        intent = new Intent("Alram Reciver");
-        ServicePending = PendingIntent.getBroadcast(
-                AlramSetActivity.this, 111, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//    참고
+//    https://illua.tistory.com/1
+//    https://androidclarified.com/android-example-alarm-manager-complete-working/
+//    https://developer88.tistory.com/83
+    public void setAlarm(){
+        alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, Time.getTimeInMillis(), ServicePending);
+        Intent intent = new Intent(this, AlarmReciver.class);
 
-        Toast.makeText(getBaseContext(),"알람 설정", Toast.LENGTH_LONG).show();
+        if(rinToneUri == null){
+            Toast.makeText(getApplicationContext(), "벨소리를 선택해주세요.", Toast.LENGTH_SHORT).show();
+        }else {
+            intent.putExtra("state","alarm on");
+            intent.putExtra("ringToneName", ringToneName);
+            intent.putExtra("rinToneUri", rinToneUri.toString());
 
+            pendingIntent = PendingIntent.getBroadcast(
+                    this, 111, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            calendar = Calendar.getInstance();
+//        시간 선택이 안되었을 경우 현재 시간으로 등록
+            if( pickerHourDay == 0 && pickerMinute == 0){
+                pickerHourDay = calendar.get(Calendar.HOUR_OF_DAY);
+                pickerMinute = calendar.get(Calendar.MINUTE);
+            }
+            calendar.set(Calendar.HOUR_OF_DAY, pickerHourDay);
+            calendar.set(Calendar.MINUTE, pickerMinute);
+
+            alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+
+            Toast.makeText(getBaseContext(),"알람 설정:"+pickerHourDay+"시"+pickerMinute+"분", Toast.LENGTH_SHORT).show();
+        }
     }
+
 }
