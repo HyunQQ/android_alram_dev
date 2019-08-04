@@ -5,18 +5,17 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
 
 public class RingtonePlayService extends Service {
-    MediaPlayer mediaPlayer;
+
 //    int startId;
 //    boolean isRunning;
-
-    @Nullable
+//
+//    @Nullable
     @Override
     public IBinder onBind(Intent intent){
         return null;
@@ -26,11 +25,11 @@ public class RingtonePlayService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        Toast.makeText(this, "알람이 울립니다.", Toast.LENGTH_SHORT).show();
         String getState = intent.getExtras().getString("state");
         String ringToneName = intent.getExtras().getString("ringToneName");
         Uri rinToneUri = Uri.parse(intent.getExtras().getString("rinToneUri"));
-        Toast.makeText(this, "알람이 울립니다.", Toast.LENGTH_SHORT).show();
-        mediaPlayer = new MediaPlayer();
+        MediaPlayer mediaPlayer = new MediaPlayer();
         try {
             mediaPlayer.setDataSource(getApplicationContext(), rinToneUri);
             mediaPlayer.prepare();

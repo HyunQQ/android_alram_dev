@@ -15,6 +15,8 @@ public class AlarmReciver extends BroadcastReceiver {
         String ringToneName = intent.getExtras().getString("ringToneName");
         String rinToneUri = intent.getExtras().getString("rinToneUri");
 
+        Toast.makeText(context, rinToneUri, Toast.LENGTH_SHORT).show();
+
         Intent service_intent = new Intent(context, RingtonePlayService.class);
         service_intent.putExtra("state", get_string);
         service_intent.putExtra("ringToneName", ringToneName);

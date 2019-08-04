@@ -268,16 +268,19 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
 //    https://androidclarified.com/android-example-alarm-manager-complete-working/
 //    https://developer88.tistory.com/83
     public void setAlarm(){
-        alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 
-        Intent intent = new Intent(this, AlarmReciver.class);
 
+//        Intent intent = new Intent(this, AlarmReciver.class);
+
+        Intent intent = new Intent("com.example.groupalram.ALARM_START");
         if(rinToneUri == null){
             Toast.makeText(getApplicationContext(), "벨소리를 선택해주세요.", Toast.LENGTH_SHORT).show();
         }else {
             intent.putExtra("state","alarm on");
             intent.putExtra("ringToneName", ringToneName);
             intent.putExtra("rinToneUri", rinToneUri.toString());
+
+            Toast.makeText(getApplicationContext(), "벨소리 uri:"+rinToneUri.toString(), Toast.LENGTH_SHORT).show();
 
             pendingIntent = PendingIntent.getBroadcast(
                     this, 111, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -287,10 +290,11 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
             if( pickerHourDay == 0 && pickerMinute == 0){
                 pickerHourDay = calendar.get(Calendar.HOUR_OF_DAY);
                 pickerMinute = calendar.get(Calendar.MINUTE);
+            }else{
+                calendar.set(Calendar.HOUR_OF_DAY, pickerHourDay);
+                calendar.set(Calendar.MINUTE, pickerMinute);
             }
-            calendar.set(Calendar.HOUR_OF_DAY, pickerHourDay);
-            calendar.set(Calendar.MINUTE, pickerMinute);
-
+            alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
             alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
 
             Toast.makeText(getBaseContext(),"알람 설정:"+pickerHourDay+"시"+pickerMinute+"분", Toast.LENGTH_SHORT).show();

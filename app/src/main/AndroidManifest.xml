@@ -17,6 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver android:name=".AlarmReciver">
+            <intent-filter>
+                <action android:name="com.example.groupalram.ALARM_START"></action>
+            </intent-filter>
+        </receiver>
+        <service android:name=".RingtonePlayService"></service>
     </application>
 
 </manifest>
