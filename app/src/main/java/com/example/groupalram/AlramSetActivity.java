@@ -82,8 +82,6 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
         mTimePicker.setIs24HourView(false);
         mTimePicker.setOnTimeChangedListener(this);
 
-
-
         btnSetAlramCancle.setOnClickListener(this);
         btnSetAlramSave.setOnClickListener(this);
         btnSelcBell.setOnClickListener(this);
@@ -138,8 +136,10 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    //벨소리 선택
+    //참고: https://developer.android.com/reference/android/media/RingtoneManager
     public void selcBellShow(){
-//        https://developer.android.com/reference/android/media/RingtoneManager 찾아보기
+
         Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE,"벨소리를 선택하세요.");
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false);
@@ -147,7 +147,7 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE,RingtoneManager.TYPE_ALARM);
         startActivityForResult(intent, REQUEST_CODE_RINGTONE);
     }
-
+    //주기 선택
     public void selcCycleShow(){
         final List<String> ListItems = new ArrayList<>();
         ListItems.add("test cycle1");
@@ -192,6 +192,8 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
                 });
         builder.show();
     }
+
+    //그룹 선택
     public void selcGroupShow(){
         final List<String> ListItems = new ArrayList<>();
         ListItems.add("test group1");
@@ -236,6 +238,8 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
                 });
         builder.show();
     }
+
+    // 옵션 선택
     public void selcOptShow(){
         final List<String> ListItems = new ArrayList<>();
         ListItems.add("test opt1");
@@ -281,42 +285,87 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
         builder.show();
     }
 
-//    알람 설정
-//    참고
-//    https://illua.tistory.com/1
-//    https://androidclarified.com/android-example-alarm-manager-complete-working/
-//    https://developer88.tistory.com/83
+    //알람 설정
+    //참고>
+    //https://illua.tistory.com/1
+    //https://androidclarified.com/android-example-alarm-manager-complete-working/
+    //https://developer88.tistory.com/83
+    // https://drcarter.tistory.com/152  -- 현재 참조중
     public void setAlarm(){
         //알람 receiver intent 생성(xml 파일에 ALARM_START 이름으로 AlarmReciver 연결)
         Intent intent = new Intent("com.example.groupalram.ALARM_START");
+
+        //요일 반복 설정
+        boolean[] week ={false, btnMon.isChecked(), btnTue.isChecked(), btnWed.isChecked(), btnThu.isChecked(), btnFri.isChecked(), btnSat.isChecked(), btnSun.isChecked()};
+        boolean isRepeat = false;
+        long intervalTime = 24*60*60*1000; // 24시간
+        long alarm_time;
+
+        for(int i=0; i<week.length; i++){
+            if(week[i]){
+                isRepeat =true;
+                break;
+            }
+        }
 
         //벨소리 선택 여부 확인
         if(rinToneUri == null){
             Toast.makeText(getApplicationContext(), "벨소리를 선택해주세요.", Toast.LENGTH_SHORT).show();
         }else {
-            intent.putExtra("state","alarm on");
-            intent.putExtra("ringToneName", ringToneName);
-            intent.putExtra("rinToneUri", rinToneUri.toString());
+            if(isRepeat){
+                intent.putExtra("state","alarm on");
+                intent.putExtra("ringToneName", ringToneName);
+                intent.putExtra("rinToneUri", rinToneUri.toString());
 
-            //Toast.makeText(getApplicationContext(), "벨소리 uri:"+rinToneUri.toString(), Toast.LENGTH_SHORT).show();
+                //pending intent 연결
+                pendingIntent = PendingIntent.getBroadcast(
+                        this, 111, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            pendingIntent = PendingIntent.getBroadcast(
-                    this, 111, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            calendar = Calendar.getInstance();
-//        시간 선택이 안되었을 경우 현재 시간으로 등록
-            if( pickerHourDay == 0 && pickerMinute == 0){
-                pickerHourDay = calendar.get(Calendar.HOUR_OF_DAY);
-                pickerMinute = calendar.get(Calendar.MINUTE);
-            }else{
-                calendar.set(Calendar.HOUR_OF_DAY, pickerHourDay);
-                calendar.set(Calendar.MINUTE, pickerMinute);
             }
-            alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-            alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+            else{ // 반복이 없을 경우
+                intent.putExtra("state","alarm on");
+                intent.putExtra("ringToneName", ringToneName);
+                intent.putExtra("rinToneUri", rinToneUri.toString());
 
-            Toast.makeText(getBaseContext(),"알람 설정:"+pickerHourDay+"시"+pickerMinute+"분", Toast.LENGTH_SHORT).show();
+                //pending intent 연결
+                pendingIntent = PendingIntent.getBroadcast(
+                        this, 111, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                alarm_time = setTriggerTime();
+                // 알람 매니저 연결
+                alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+
+                Toast.makeText(getBaseContext(),"알람 설정:"+pickerHourDay+"시"+pickerMinute+"분", Toast.LENGTH_SHORT).show();
+            }
+
         }
+    }
+
+    private long setTriggerTime()
+    {
+        long sysTime = System.currentTimeMillis();
+        long alarm_time;
+        //calendar 객체
+        calendar = Calendar.getInstance();
+        //시간 선택이 안되었을 경우 현재 시간으로 등록
+        if( pickerHourDay == 0 && pickerMinute == 0){
+            pickerHourDay = calendar.get(Calendar.HOUR_OF_DAY);
+            pickerMinute = calendar.get(Calendar.MINUTE);
+            alarm_time = sysTime;
+        }else{
+            calendar.set(Calendar.HOUR_OF_DAY, pickerHourDay);
+            calendar.set(Calendar.MINUTE, pickerMinute);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            long pickerTime = calendar.getTimeInMillis();
+            alarm_time = pickerTime;
+            if (sysTime > pickerTime)
+                alarm_time += 1000 * 60 * 60 * 24;
+        }
+
+        return alarm_time;
     }
 
 }
