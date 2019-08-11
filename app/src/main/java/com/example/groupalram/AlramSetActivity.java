@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +26,15 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
     private Button btnSelcCycle;
     private Button btnSelcGroup;
     private Button btnSelcOpt;
+    private ToggleButton btnMon;
+    private ToggleButton btnTue;
+    private ToggleButton btnWed;
+    private ToggleButton btnThu;
+    private ToggleButton btnFri;
+    private ToggleButton btnSat;
+    private ToggleButton btnSun;
+
+
 
     TimePicker mTimePicker;
     int pickerHourDay =0;
@@ -40,8 +50,6 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
     private String ringToneName;
     private Uri rinToneUri;
     public static final int REQUEST_CODE_RINGTONE=10005;
-
-
 
     //timepicker 설정 값 받아오는 함수
     @Override
@@ -61,9 +69,20 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
         btnSelcCycle        = (Button)findViewById(R.id.btn_selc_cycle);
         btnSelcGroup        = (Button)findViewById(R.id.btn_selc_group);
         btnSelcOpt          = (Button)findViewById(R.id.btn_selc_opt);
+
+        btnMon = (ToggleButton) findViewById(R.id.btn_mon);
+        btnTue = (ToggleButton) findViewById(R.id.btn_tue);
+        btnWed = (ToggleButton) findViewById(R.id.btn_wed);
+        btnThu = (ToggleButton) findViewById(R.id.btn_thu);
+        btnFri = (ToggleButton) findViewById(R.id.btn_fri);
+        btnSat = (ToggleButton) findViewById(R.id.btn_sat);
+        btnSun = (ToggleButton) findViewById(R.id.btn_sun);
+
         mTimePicker         = (TimePicker)findViewById(R.id.alram_time_picker);
         mTimePicker.setIs24HourView(false);
         mTimePicker.setOnTimeChangedListener(this);
+
+
 
         btnSetAlramCancle.setOnClickListener(this);
         btnSetAlramSave.setOnClickListener(this);
@@ -262,17 +281,16 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
         builder.show();
     }
 
-   //////////// 제작중
+//    알람 설정
 //    참고
 //    https://illua.tistory.com/1
 //    https://androidclarified.com/android-example-alarm-manager-complete-working/
 //    https://developer88.tistory.com/83
     public void setAlarm(){
-
-
-//        Intent intent = new Intent(this, AlarmReciver.class);
-
+        //알람 receiver intent 생성(xml 파일에 ALARM_START 이름으로 AlarmReciver 연결)
         Intent intent = new Intent("com.example.groupalram.ALARM_START");
+
+        //벨소리 선택 여부 확인
         if(rinToneUri == null){
             Toast.makeText(getApplicationContext(), "벨소리를 선택해주세요.", Toast.LENGTH_SHORT).show();
         }else {
@@ -280,7 +298,7 @@ public class AlramSetActivity extends AppCompatActivity implements View.OnClickL
             intent.putExtra("ringToneName", ringToneName);
             intent.putExtra("rinToneUri", rinToneUri.toString());
 
-            Toast.makeText(getApplicationContext(), "벨소리 uri:"+rinToneUri.toString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "벨소리 uri:"+rinToneUri.toString(), Toast.LENGTH_SHORT).show();
 
             pendingIntent = PendingIntent.getBroadcast(
                     this, 111, intent, PendingIntent.FLAG_UPDATE_CURRENT);
